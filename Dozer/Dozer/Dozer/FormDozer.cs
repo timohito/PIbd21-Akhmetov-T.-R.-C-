@@ -31,7 +31,7 @@ namespace Dozer
 		private void buttonCreate_Click(object sender, EventArgs e)
 		{
 			Random rnd = new Random();
-			car = new Car(100, 1000, Color.Black);
+			car = new Car(100, 1000, Color.Yellow);
 			car.SetPosition(rnd.Next(10, 60), rnd.Next(100, 400), pictureBoxCars.Width, pictureBoxCars.Height);
 			Draw();
 		}

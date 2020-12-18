@@ -1,10 +1,13 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace Dozer
 {
     public class Parking<T> where T : class, ITransport
     {
-        private readonly T[] _places;
+        private readonly List<T> _places;
+
+        private readonly int _maxCount;
 
         private readonly int pictureWidth;
 
@@ -20,42 +23,40 @@ namespace Dozer
         {
             int columns = picWidth / _placeSizeWidth;
             rows = picHeight / _placeSizeHeight;
-            _places = new T[columns * rows];
+            _maxCount = columns * rows;
+            _places = new List<T>();
             pictureWidth = picWidth;
             pictureHeight = picHeight; ;
         }
 
         public static bool operator +(Parking<T> p, T car)
         {
-            for (int i = 0; i < p._places.Length; i++)
+            if (p._places.Count >= p._maxCount)
             {
-                if (p._places[i] == null)
-                {
-                    car.SetPosition(i / p.rows * p._placeSizeWidth + 15, (i - i / p.rows * p.rows) * p._placeSizeHeight + 33, p.pictureWidth, p.pictureHeight);
-                    p._places[i] = car;
-                    return true;
-                };
+                return false;
             }
-            return false;
+            p._places.Add(car);
+            return true;
         }
 
         public static T operator -(Parking<T> p, int index)
         {
-            if (index < 0 || index > p._places.Length - 1)
+            if (index < -1 || index >= p._places.Count)
             {
                 return null;
             }
             T doz = p._places[index];
-            p._places[index] = null;
+            p._places.RemoveAt(index);
             return doz;
         }
 
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < _places.Length; i++)
+            for (int i = 0; i < _places.Count; ++i)
             {
-                _places[i]?.DrawTransport(g);
+                _places[i].SetPosition(5 + i / 5 * _placeSizeWidth + 5, i % 5 * _placeSizeHeight + 15, pictureWidth, pictureHeight);
+                _places[i].DrawTransport(g);
             }
         }
 
