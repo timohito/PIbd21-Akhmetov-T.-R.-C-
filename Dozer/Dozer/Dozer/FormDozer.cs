@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace Dozer
 {
-    public partial class FormDozer : Form
+	public partial class FormDozer : Form
 	{
-		private Dozer dozer;
+		private ITransport car;
 
 		public FormDozer()
 		{
@@ -17,15 +17,15 @@ namespace Dozer
 		{
 			Bitmap bmp = new Bitmap(pictureBoxCars.Width, pictureBoxCars.Height);
 			Graphics gr = Graphics.FromImage(bmp);
-			dozer.DrawTransport(gr);
+			car.DrawTransport(gr);
 			pictureBoxCars.Image = bmp;
 		}
 
 		private void buttonCreate_Click(object sender, EventArgs e)
 		{
 			Random rnd = new Random();
-			dozer = new Dozer(100, 1000, Color.Yellow, Color.Black, true, true);
-			dozer.SetPosition(rnd.Next(10, 60), rnd.Next(100, 400), pictureBoxCars.Width, pictureBoxCars.Height);
+			car = new Car(100, 1000, Color.Yellow);
+			car.SetPosition(rnd.Next(10, 60), rnd.Next(100, 400), pictureBoxCars.Width, pictureBoxCars.Height);
 			Draw();
 		}
 
@@ -35,19 +35,27 @@ namespace Dozer
 			switch (name)
 			{
 				case "buttonUp":
-					dozer.MoveTransport(Direction.Up);
+					car.MoveTransport(Direction.Up);
 					break;
 				case "buttonDown":
-					dozer.MoveTransport(Direction.Down);
+					car.MoveTransport(Direction.Down);
 					break;
 				case "buttonLeft":
-					dozer.MoveTransport(Direction.Left);
+					car.MoveTransport(Direction.Left);
 					break;
 				case "buttonRight":
-					dozer.MoveTransport(Direction.Right);
+					car.MoveTransport(Direction.Right);
 					break;
 			}
 			Draw();
 		}
-	}
+
+        private void buttonCreateDozer_Click(object sender, EventArgs e)
+        {
+			Random rnd = new Random();
+			car = new Dozer(100, 1000, Color.Yellow, Color.Black, true, true);
+			car.SetPosition(rnd.Next(10, 60), rnd.Next(100, 400), pictureBoxCars.Width, pictureBoxCars.Height);
+			Draw();
+		}
+    }
 }

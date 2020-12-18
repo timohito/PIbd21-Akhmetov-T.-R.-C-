@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Dozer
 {
-    static class Program
+	static class Program
 	{
 		/// <summary>
 		/// Главная точка входа для приложения.
