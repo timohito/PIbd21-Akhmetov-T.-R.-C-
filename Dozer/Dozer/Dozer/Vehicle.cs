@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 
+
 namespace Dozer
 {
 	public abstract class Vehicle : ITransport
@@ -18,6 +19,8 @@ namespace Dozer
 
 		public Color MainColor { protected set; get; }
 
+		public Color DopColor { protected set; get; }
+
 		public void SetPosition(int x, int y, int width, int height)
 		{
 			_startPosX = x;
@@ -25,7 +28,6 @@ namespace Dozer
 			_pictureWidth = width;
 			_pictureHeight = height;
 		}
-
 		public abstract void DrawTransport(Graphics g);
 
 		public abstract void MoveTransport(Direction direction);

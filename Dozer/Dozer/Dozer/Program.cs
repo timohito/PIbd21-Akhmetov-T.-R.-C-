@@ -13,7 +13,7 @@ namespace Dozer
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormDozer());
+			Application.Run(new FormParking());
 		}
 	}
 }

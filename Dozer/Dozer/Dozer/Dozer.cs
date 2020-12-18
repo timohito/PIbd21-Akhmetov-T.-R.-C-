@@ -1,12 +1,9 @@
 ﻿using System.Drawing;
 
-
 namespace Dozer
 {
 	class Dozer : Car 
 	{
-		public Color DopColor { private set; get; }
-
 		public bool Kovsh { private set; get; }
 
 		public bool Truba { private set; get; }
@@ -14,9 +11,6 @@ namespace Dozer
 		public Dozer(int maxSpeed, float weight, Color mainColor, Color dopColor, bool kovsh, bool truba) : 
 			base(maxSpeed, weight, mainColor, 100, 60)
 		{
-			MaxSpeed = maxSpeed;
-			Weight = weight;
-			MainColor = mainColor;
 			DopColor = dopColor;
 			Kovsh = kovsh;
 			Truba = truba;

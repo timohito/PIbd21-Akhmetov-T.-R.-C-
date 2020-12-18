@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+
 namespace Dozer
 {
 	public partial class FormDozer : Form
@@ -13,18 +14,24 @@ namespace Dozer
 			InitializeComponent();
 		}
 
+		public void SetCar(ITransport car)
+		{
+			this.car = car;
+			Draw();
+		}
+
 		private void Draw()	
 		{
 			Bitmap bmp = new Bitmap(pictureBoxCars.Width, pictureBoxCars.Height);
 			Graphics gr = Graphics.FromImage(bmp);
-			car.DrawTransport(gr);
+			car?.DrawTransport(gr);
 			pictureBoxCars.Image = bmp;
 		}
 
 		private void buttonCreate_Click(object sender, EventArgs e)
 		{
 			Random rnd = new Random();
-			car = new Car(100, 1000, Color.Yellow);
+			car = new Car(100, 1000, Color.Black);
 			car.SetPosition(rnd.Next(10, 60), rnd.Next(100, 400), pictureBoxCars.Width, pictureBoxCars.Height);
 			Draw();
 		}
