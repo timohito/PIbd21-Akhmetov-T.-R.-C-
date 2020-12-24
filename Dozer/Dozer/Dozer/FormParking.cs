@@ -113,6 +113,39 @@ namespace Dozer
                 }
             }
         }
+
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialogDozer.ShowDialog() == DialogResult.OK)
+            {
+                if (parkingCollection.SaveData(saveFileDialogDozer.FileName))
+                {
+                    MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogDozer.ShowDialog() == DialogResult.OK)
+            {
+                if (parkingCollection.LoadData(openFileDialogDozer.FileName))
+                {
+                    MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ReloadLevels();
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
+
 

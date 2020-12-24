@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Dozer
 {
@@ -7,6 +8,8 @@ namespace Dozer
 		protected readonly int carWidth = 90;
 
 		protected readonly int carHeight = 50;
+
+		protected readonly char separator = ';';
 
 		public Car(int maxSpeed, float weight, Color mainColor)
 		{
@@ -23,6 +26,18 @@ namespace Dozer
 			this.carWidth = carWidth;
 			this.carHeight = carHeight;
 		}
+
+		public Car(string info)
+		{
+			string[] strs = info.Split(separator);
+			if (strs.Length == 3)
+			{
+				MaxSpeed = Convert.ToInt32(strs[0]);
+				Weight = Convert.ToInt32(strs[1]);
+				MainColor = Color.FromName(strs[2]);
+			}
+		}
+
 		public override void MoveTransport(Direction direction)
 		{
 			float step = MaxSpeed * 100 / Weight;
@@ -74,6 +89,11 @@ namespace Dozer
 			g.DrawEllipse(pen, _startPosX + 40, _startPosY + 25, 20, 20);
 			g.DrawEllipse(pen, _startPosX + 60, _startPosY + 25, 20, 20);
 			g.DrawEllipse(pen, _startPosX + 80, _startPosY + 25, 20, 20);
+		}
+
+		public override string ToString()
+		{
+			return $"{MaxSpeed}{separator}{Weight}{separator}{MainColor.Name}";
 		}
 	}
 }

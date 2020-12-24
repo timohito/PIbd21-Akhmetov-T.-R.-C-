@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Dozer
@@ -13,6 +14,8 @@ namespace Dozer
 
         private readonly int pictureHeight;
 
+        private readonly char separator = ':';
+
         public ParkingCollection(int pictureWidth, int pictureHeight)
         {
             parkingStages = new Dictionary<string, Parking<Vehicle>>();
@@ -22,10 +25,8 @@ namespace Dozer
 
         public void AddParking(string name)
         {
-            if (parkingStages.ContainsKey(name))
-            {
-                return;
-            }
+            if (parkingStages.Keys.Contains(name)) { return; }
+
             parkingStages.Add(name, new Parking<Vehicle>(pictureWidth, pictureHeight));
         }
 
@@ -39,14 +40,114 @@ namespace Dozer
 
         public Parking<Vehicle> this[string ind]
         {
+
             get
             {
-                if(parkingStages.ContainsKey(ind))
+                if (!parkingStages.ContainsKey(ind))
                 {
-                    return parkingStages[ind];
+                    return null;
                 }
-                return null;
+                return parkingStages[ind];
             }
+
+        }
+
+        public bool SaveData(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+            using (StreamWriter sw = new StreamWriter(filename))
+            {
+                sw.WriteLine($"ParkingCollection");
+                foreach (var level in parkingStages)
+                {
+                    //Начинаем парковку
+                    sw.WriteLine($"Parking{separator}{level.Key}");
+                    ITransport car = null;
+                    for (int i = 0; (car = level.Value.GetNext(i)) != null; i++)
+                    {
+                        if (car != null)
+                        {
+                            //если место не пустое
+                            //Записываем тип машины
+                            if (car.GetType().Name == "Car")
+                            {
+                                sw.Write($"Car{separator}");
+                            }
+                            if (car.GetType().Name == "Dozer")
+                            {
+                                sw.Write($"Dozer{separator}");
+                            }
+                            //Записываемые параметры
+                            sw.WriteLine(car);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool LoadData(string filename)
+        {
+            if (!File.Exists(filename))
+            {
+                return false;
+            }
+            using (StreamReader sr = new StreamReader(filename))
+            {
+                bool head = true;
+                string line;
+                Vehicle car = null;
+                string key = string.Empty;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    line = line.Replace("\r", "");
+                    if (head)
+                    {
+                        if (line.Contains("ParkingCollection"))
+                        {
+                            //очищаем записи
+                            parkingStages.Clear();
+                            head = false;
+                        }
+                        else
+                        {
+                            //если нет такой записи, то это не те данные
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        //идем по считанным записям
+                        if (line.Contains("Parking"))
+                        {//начинаем новую парковку
+                            key = line.Split(separator)[1];
+                            parkingStages.Add(key, new Parking<Vehicle>(pictureWidth, pictureHeight));
+                            continue;
+                        }
+                        if (string.IsNullOrEmpty(line))
+                        {
+                            continue;
+                        }
+                        if (line.Split(separator)[0] == "Car")
+                        {
+                            car = new Car(line.Split(separator)[1]);
+                        }
+                        else if (line.Split(separator)[0] == "Dozer")
+                        {
+                            car = new Dozer(line.Split(separator)[1]);
+                        }
+                        var result = parkingStages[key] + car;
+                        if (!result)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 }

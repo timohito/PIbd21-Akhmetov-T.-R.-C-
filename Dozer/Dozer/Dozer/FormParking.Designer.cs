@@ -39,8 +39,15 @@
             this.buttonAddParking = new System.Windows.Forms.Button();
             this.buttonDelParking = new System.Windows.Forms.Button();
             this.buttonSetCar = new System.Windows.Forms.Button();
+            this.menuDozer = new System.Windows.Forms.MenuStrip();
+            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.загрузитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialogDozer = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialogDozer = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxParking)).BeginInit();
             this.groupBoxTakeCar.SuspendLayout();
+            this.menuDozer.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBoxParking
@@ -92,7 +99,7 @@
             // listBoxParkings
             // 
             this.listBoxParkings.FormattingEnabled = true;
-            this.listBoxParkings.Location = new System.Drawing.Point(680, 93);
+            this.listBoxParkings.Location = new System.Drawing.Point(680, 122);
             this.listBoxParkings.Name = "listBoxParkings";
             this.listBoxParkings.Size = new System.Drawing.Size(108, 69);
             this.listBoxParkings.TabIndex = 4;
@@ -100,7 +107,7 @@
             // 
             // textBoxNameOfParking
             // 
-            this.textBoxNameOfParking.Location = new System.Drawing.Point(680, 25);
+            this.textBoxNameOfParking.Location = new System.Drawing.Point(680, 54);
             this.textBoxNameOfParking.Name = "textBoxNameOfParking";
             this.textBoxNameOfParking.Size = new System.Drawing.Size(108, 20);
             this.textBoxNameOfParking.TabIndex = 5;
@@ -108,7 +115,7 @@
             // labelParkings
             // 
             this.labelParkings.AutoSize = true;
-            this.labelParkings.Location = new System.Drawing.Point(707, 9);
+            this.labelParkings.Location = new System.Drawing.Point(698, 38);
             this.labelParkings.Name = "labelParkings";
             this.labelParkings.Size = new System.Drawing.Size(57, 13);
             this.labelParkings.TabIndex = 6;
@@ -116,7 +123,7 @@
             // 
             // buttonAddParking
             // 
-            this.buttonAddParking.Location = new System.Drawing.Point(680, 51);
+            this.buttonAddParking.Location = new System.Drawing.Point(680, 80);
             this.buttonAddParking.Name = "buttonAddParking";
             this.buttonAddParking.Size = new System.Drawing.Size(108, 36);
             this.buttonAddParking.TabIndex = 7;
@@ -126,7 +133,7 @@
             // 
             // buttonDelParking
             // 
-            this.buttonDelParking.Location = new System.Drawing.Point(680, 168);
+            this.buttonDelParking.Location = new System.Drawing.Point(680, 197);
             this.buttonDelParking.Name = "buttonDelParking";
             this.buttonDelParking.Size = new System.Drawing.Size(108, 36);
             this.buttonDelParking.TabIndex = 8;
@@ -144,11 +151,54 @@
             this.buttonSetCar.UseVisualStyleBackColor = true;
             this.buttonSetCar.Click += new System.EventHandler(this.buttonSetCar_Click);
             // 
+            // menuDozer
+            // 
+            this.menuDozer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.файлToolStripMenuItem});
+            this.menuDozer.Location = new System.Drawing.Point(0, 0);
+            this.menuDozer.Name = "menuDozer";
+            this.menuDozer.Size = new System.Drawing.Size(800, 24);
+            this.menuDozer.TabIndex = 11;
+            this.menuDozer.Text = "menuStripDozer";
+            // 
+            // файлToolStripMenuItem
+            // 
+            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.сохранитьToolStripMenuItem,
+            this.загрузитьToolStripMenuItem});
+            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.файлToolStripMenuItem.Text = "Файл";
+            // 
+            // сохранитьToolStripMenuItem
+            // 
+            this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
+            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.сохранитьToolStripMenuItem.Text = "Сохранить";
+            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
+            // 
+            // загрузитьToolStripMenuItem
+            // 
+            this.загрузитьToolStripMenuItem.Name = "загрузитьToolStripMenuItem";
+            this.загрузитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.загрузитьToolStripMenuItem.Text = "Загрузить";
+            this.загрузитьToolStripMenuItem.Click += new System.EventHandler(this.загрузитьToolStripMenuItem_Click);
+            // 
+            // saveFileDialogDozer
+            // 
+            this.saveFileDialogDozer.Filter = "txt file | *.txt";
+            // 
+            // openFileDialogDozer
+            // 
+            this.openFileDialogDozer.FileName = "openFileDialogDozer";
+            this.openFileDialogDozer.Filter = "txt file | *.txt";
+            // 
             // FormParking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.menuDozer);
             this.Controls.Add(this.buttonSetCar);
             this.Controls.Add(this.buttonDelParking);
             this.Controls.Add(this.buttonAddParking);
@@ -162,6 +212,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxParking)).EndInit();
             this.groupBoxTakeCar.ResumeLayout(false);
             this.groupBoxTakeCar.PerformLayout();
+            this.menuDozer.ResumeLayout(false);
+            this.menuDozer.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,5 +231,11 @@
 		private System.Windows.Forms.Button buttonAddParking;
 		private System.Windows.Forms.Button buttonDelParking;
 		private System.Windows.Forms.Button buttonSetCar;
-	}
+        private System.Windows.Forms.MenuStrip menuDozer;
+        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem загрузитьToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogDozer;
+        private System.Windows.Forms.OpenFileDialog openFileDialogDozer;
+    }
 }

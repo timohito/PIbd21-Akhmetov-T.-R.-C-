@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Dozer
 {
@@ -17,7 +18,21 @@ namespace Dozer
 			Kovsh = kovsh;
 			Truba = truba;
 		}
-		
+
+		public Dozer(string info) : base(info)
+		{
+			string[] strs = info.Split(separator);
+			if (strs.Length == 6)
+			{
+				MaxSpeed = Convert.ToInt32(strs[0]);
+				Weight = Convert.ToInt32(strs[1]);
+				MainColor = Color.FromName(strs[2]);
+				DopColor = Color.FromName(strs[3]);
+				Kovsh = Convert.ToBoolean(strs[4]);
+				Truba = Convert.ToBoolean(strs[5]);
+			}
+		}
+
 		public override void DrawTransport(Graphics g)
 		{
 			if (Kovsh)
@@ -41,6 +56,11 @@ namespace Dozer
 		public void SetDopColor(Color color)
 		{
 			DopColor = color;
+		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}{separator}{DopColor.Name}{separator}{Kovsh}{separator}{Truba}";
 		}
 	}
 }
