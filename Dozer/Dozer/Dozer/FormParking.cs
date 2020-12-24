@@ -13,7 +13,6 @@ namespace Dozer
         {
             InitializeComponent();
             parkingCollection = new ParkingCollection(pictureBoxParking.Width, pictureBoxParking.Height);
-            Draw();
         }
 
         private void ReloadLevels()
@@ -39,7 +38,7 @@ namespace Dozer
         private void Draw()
         {
             if (listBoxParkings.SelectedIndex > -1)
-            {
+            {//если выбран один из пуктов в listBox (при старте программы ни один пункт не будет выбран и может возникнуть ошибка, если мы попытаемся обратиться к элементуlistBox)
                 Bitmap bmp = new Bitmap(pictureBoxParking.Width, pictureBoxParking.Height);
                 Graphics gr = Graphics.FromImage(bmp);
                 parkingCollection[listBoxParkings.SelectedItem.ToString()].Draw(gr);
@@ -51,68 +50,47 @@ namespace Dozer
         {
             Draw();
         }
-
-        private void buttonAddParking_Click(object sender, EventArgs e)
+		
+		private void buttonAddParking_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxNameOfParking.Text))
             {
-                MessageBox.Show("Введите название автовокзала", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); return;
+                MessageBox.Show("Введите название парковки", "Ошибка",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             parkingCollection.AddParking(textBoxNameOfParking.Text);
             ReloadLevels();
         }
 
-        private void buttonParkTransport_Click(object sender, EventArgs e)
+        private void buttonSetCar_Click(object sender, EventArgs e)
         {
-            if (listBoxParkings.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    var car = new Car(100, 1000, dialog.Color);
+            var formCarConfig = new FormCarConfig();
+            formCarConfig.AddEvent(AddCar);
+            formCarConfig.Show();
+        }
 
-                    if (parkingCollection[listBoxParkings.SelectedItem.ToString()] + car)
-                    {
-                        Draw();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Парковка переполнена");
-                    }
+        private void AddCar(Vehicle car)
+        {
+            if (car != null && listBoxParkings.SelectedIndex > -1)
+            {
+                if ((parkingCollection[listBoxParkings.SelectedItem.ToString()]) + car)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Машину не удалось поставить");
                 }
             }
         }
 
-        private void buttonParkDozer_Click(object sender, EventArgs e)
-        {
-            if (listBoxParkings.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    ColorDialog dialogDop = new ColorDialog();
-                    if (dialogDop.ShowDialog() == DialogResult.OK)
-                    {
-                        var car = new Dozer(100, 1000, dialog.Color, dialogDop.Color, true, true);
-                        if (parkingCollection[listBoxParkings.SelectedItem.ToString()] + car)
-                        {
-                            Draw();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Парковка переполнена");
-                        }
-                    }
-                }
-            }
-        }
-
-        private void buttonTake_Click(object sender, EventArgs e)
+        private void buttonTakeCar_Click(object sender, EventArgs e)
         {
             if (listBoxParkings.SelectedIndex > -1 && maskedTextBoxForCar.Text != "")
             {
                 var car = parkingCollection[listBoxParkings.SelectedItem.ToString()] -
-                Convert.ToInt32(maskedTextBoxForCar.Text);
+				 Convert.ToInt32(maskedTextBoxForCar.Text);
                 if (car != null)
                 {
                     FormDozer form = new FormDozer();

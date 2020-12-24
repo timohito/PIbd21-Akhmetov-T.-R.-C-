@@ -4,6 +4,8 @@ namespace Dozer
 {
 	class Dozer : Car 
 	{
+		public Color DopColor { private set; get; }
+
 		public bool Kovsh { private set; get; }
 
 		public bool Truba { private set; get; }
@@ -34,6 +36,11 @@ namespace Dozer
 			}
 
 			base.DrawTransport(g);
+		}
+
+		public void SetDopColor(Color color)
+		{
+			DopColor = color;
 		}
 	}
 }

@@ -17,16 +17,14 @@ namespace Dozer
 
         private readonly int _placeSizeHeight = 80;
 
-        private readonly int rows;
-
         public Parking(int picWidth, int picHeight)
         {
-            int columns = picWidth / _placeSizeWidth;
-            rows = picHeight / _placeSizeHeight;
-            _maxCount = columns * rows;
-            _places = new List<T>();
+            int width = picWidth / _placeSizeWidth;
+            int height = picHeight / _placeSizeHeight;
+            _maxCount = width * height;
             pictureWidth = picWidth;
-            pictureHeight = picHeight; ;
+            pictureHeight = picHeight;
+            _places = new List<T>();
         }
 
         public static bool operator +(Parking<T> p, T car)
@@ -41,13 +39,13 @@ namespace Dozer
 
         public static T operator -(Parking<T> p, int index)
         {
-            if (index < -1 || index >= p._places.Count)
+            if (index < -1 || index > p._places.Count)
             {
                 return null;
             }
-            T doz = p._places[index];
+            T car = p._places[index];
             p._places.RemoveAt(index);
-            return doz;
+            return car;
         }
 
         public void Draw(Graphics g)
@@ -55,7 +53,8 @@ namespace Dozer
             DrawMarking(g);
             for (int i = 0; i < _places.Count; ++i)
             {
-                _places[i].SetPosition(5 + i / 5 * _placeSizeWidth + 5, i % 5 * _placeSizeHeight + 15, pictureWidth, pictureHeight);
+                _places[i].SetPosition(5 + i / 5 * _placeSizeWidth + 5, i % 5 *
+                _placeSizeHeight + 15, pictureWidth, pictureHeight);
                 _places[i].DrawTransport(g);
             }
         }
@@ -67,9 +66,11 @@ namespace Dozer
             {
                 for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j)
                 {
-                    g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i * _placeSizeWidth + _placeSizeWidth / 2, j * _placeSizeHeight);
+                    g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i *
+                   _placeSizeWidth + _placeSizeWidth / 2, j * _placeSizeHeight);
                 }
-                g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
+                g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth,
+               (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
             }
         }
     }

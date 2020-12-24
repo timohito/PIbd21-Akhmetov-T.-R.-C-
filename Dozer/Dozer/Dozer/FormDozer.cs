@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-
 namespace Dozer
 {
 	public partial class FormDozer : Form
@@ -57,12 +56,12 @@ namespace Dozer
 			Draw();
 		}
 
-        private void buttonCreateDozer_Click(object sender, EventArgs e)
-        {
+		private void buttonCreateDozer_Click(object sender, EventArgs e)
+		{
 			Random rnd = new Random();
 			car = new Dozer(100, 1000, Color.Yellow, Color.Black, true, true);
 			car.SetPosition(rnd.Next(10, 60), rnd.Next(100, 400), pictureBoxCars.Width, pictureBoxCars.Height);
 			Draw();
 		}
-    }
+	}
 }

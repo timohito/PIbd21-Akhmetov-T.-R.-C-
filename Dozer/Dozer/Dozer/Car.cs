@@ -14,7 +14,7 @@ namespace Dozer
 			Weight = weight;
 			MainColor = mainColor;
 		}
-
+		
 		protected Car(int maxSpeed, float weight, Color mainColor, int carWidth, int carHeight)
 		{
 			MaxSpeed = maxSpeed;
@@ -74,9 +74,7 @@ namespace Dozer
 			g.DrawEllipse(pen, _startPosX + 40, _startPosY + 25, 20, 20);
 			g.DrawEllipse(pen, _startPosX + 60, _startPosY + 25, 20, 20);
 			g.DrawEllipse(pen, _startPosX + 80, _startPosY + 25, 20, 20);
-
 		}
-
 	}
 }
 
