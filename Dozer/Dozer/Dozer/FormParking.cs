@@ -51,7 +51,7 @@ namespace Dozer
             Draw();
         }
 		
-		private void buttonAddParking_Click(object sender, EventArgs e)
+	private void buttonAddParking_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxNameOfParking.Text))
             {
