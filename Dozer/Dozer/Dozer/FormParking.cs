@@ -90,7 +90,7 @@ namespace Dozer
             if (listBoxParkings.SelectedIndex > -1 && maskedTextBoxForCar.Text != "")
             {
                 var car = parkingCollection[listBoxParkings.SelectedItem.ToString()] -
-				 Convert.ToInt32(maskedTextBoxForCar.Text);
+		Convert.ToInt32(maskedTextBoxForCar.Text);
                 if (car != null)
                 {
                     FormDozer form = new FormDozer();
