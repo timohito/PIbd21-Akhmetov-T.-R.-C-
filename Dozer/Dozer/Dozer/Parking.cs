@@ -31,7 +31,7 @@ namespace Dozer
         {
             if (p._places.Count >= p._maxCount)
             {
-                return false;
+                throw new ParkingOverflowException();
             }
             p._places.Add(car);
             return true;
@@ -39,9 +39,9 @@ namespace Dozer
 
         public static T operator -(Parking<T> p, int index)
         {
-            if (index < -1 || index >= p._places.Count)
+            if (index < 0 || index >= p._places.Count)
             {
-                return null;
+                throw new ParkingNotFoundException(index);
             }
             T car = p._places[index];
             p._places.RemoveAt(index);

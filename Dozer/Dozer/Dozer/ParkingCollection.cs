@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -52,7 +53,7 @@ namespace Dozer
 
         }
 
-        public bool SaveData(string filename)
+        public void SaveData(string filename)
         {
             if (File.Exists(filename))
             {
@@ -86,14 +87,13 @@ namespace Dozer
                     }
                 }
             }
-            return true;
         }
 
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException();
             }
             using (StreamReader sr = new StreamReader(filename))
             {
@@ -115,7 +115,7 @@ namespace Dozer
                         else
                         {
                             //если нет такой записи, то это не те данные
-                            return false;
+                            throw new FormatException("Неверный формат файла");
                         }
                     }
                     else
@@ -142,12 +142,11 @@ namespace Dozer
                         var result = parkingStages[key] + car;
                         if (!result)
                         {
-                            return false;
+                            throw new OverflowException("Не удалось загрузить машину на парковку");
                         }
                     }
                 }
             }
-            return true;
         }
     }
 }

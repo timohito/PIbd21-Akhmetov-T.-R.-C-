@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,10 +10,13 @@ namespace Dozer
     {
         private readonly ParkingCollection parkingCollection;
 
+        private readonly Logger logger;
+
         public FormParking()
         {
             InitializeComponent();
             parkingCollection = new ParkingCollection(pictureBoxParking.Width, pictureBoxParking.Height);
+            logger = LogManager.GetCurrentClassLogger();
         }
 
         private void ReloadLevels()
@@ -23,13 +27,13 @@ namespace Dozer
             {
                 listBoxParkings.Items.Add(parkingCollection.Keys[i]);
             }
-            if (listBoxParkings.Items.Count > 0 && (index == -1 || index >=
-           listBoxParkings.Items.Count))
+            if (listBoxParkings.Items.Count > 0 && (index == -1 || index >= 
+            listBoxParkings.Items.Count))
             {
                 listBoxParkings.SelectedIndex = 0;
             }
             else if (listBoxParkings.Items.Count > 0 && index > -1 && index <
-           listBoxParkings.Items.Count)
+            listBoxParkings.Items.Count)
             {
                 listBoxParkings.SelectedIndex = index;
             }
@@ -48,6 +52,7 @@ namespace Dozer
 
         private void listBoxParkings_SelectedIndexChanged(object sender, EventArgs e)
         {
+            logger.Info($"Перешли на парковку {listBoxParkings.SelectedItem}");
             Draw();
         }
 		
@@ -59,6 +64,7 @@ namespace Dozer
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            logger.Info($"Добавили парковку {textBoxNameOfParking.Text}");
             parkingCollection.AddParking(textBoxNameOfParking.Text);
             ReloadLevels();
         }
@@ -74,13 +80,28 @@ namespace Dozer
         {
             if (car != null && listBoxParkings.SelectedIndex > -1)
             {
-                if ((parkingCollection[listBoxParkings.SelectedItem.ToString()]) + car)
+                try
                 {
+                    if ((parkingCollection[listBoxParkings.SelectedItem.ToString()]) + car)
+                    {
+                        Draw();
+                        logger.Info($"Добавлен транспорт {car}");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Транспорт не удалось поставить");
+                    }
                     Draw();
                 }
-                else
+                catch (ParkingOverflowException ex)
                 {
-                    MessageBox.Show("Машину не удалось поставить");
+                    logger.Warn("Переполнение: " + ex.Message);
+                    MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn("Неизвестная ошибка: " + ex.Message);
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -89,15 +110,29 @@ namespace Dozer
         {
             if (listBoxParkings.SelectedIndex > -1 && maskedTextBoxForCar.Text != "")
             {
-                var car = parkingCollection[listBoxParkings.SelectedItem.ToString()] -
-				 Convert.ToInt32(maskedTextBoxForCar.Text);
-                if (car != null)
+                try
                 {
-                    FormDozer form = new FormDozer();
-                    form.SetCar(car);
-                    form.ShowDialog();
+                    var car = parkingCollection[listBoxParkings.SelectedItem.ToString()] - Convert.ToInt32(maskedTextBoxForCar.Text);
+                    if (car != null)
+                    {
+                        FormDozer form = new FormDozer();
+                        form.SetCar(car);
+                        form.ShowDialog();
+
+                        logger.Info($"Изъят транспорт {car} с места {maskedTextBoxForCar.Text}");
+                    }
+                    Draw();
                 }
-                Draw();
+                catch (ParkingNotFoundException ex)
+                {
+                    logger.Warn("Не найдено: " + ex.Message);
+                    MessageBox.Show(ex.Message, "Не найдено", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn("Неизвестная ошибка при сохранении: " + ex.Message);
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -108,6 +143,7 @@ namespace Dozer
                 if (MessageBox.Show($"Удалить парковку{ listBoxParkings.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes)
                 {
+                    logger.Info($"Удалили парковку {listBoxParkings.SelectedItem}");
                     parkingCollection.DelParking(listBoxParkings.SelectedItem.ToString());
                     ReloadLevels();
                 }
@@ -118,13 +154,16 @@ namespace Dozer
         {
             if (saveFileDialogDozer.ShowDialog() == DialogResult.OK)
             {
-                if (parkingCollection.SaveData(saveFileDialogDozer.FileName))
+                try
                 {
+                    parkingCollection.SaveData(saveFileDialogDozer.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Сохранено в файл " + saveFileDialogDozer.FileName);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn("Неизвестная ошибка при сохранении: " + ex.Message);
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -133,15 +172,18 @@ namespace Dozer
         {
             if (openFileDialogDozer.ShowDialog() == DialogResult.OK)
             {
-                if (parkingCollection.LoadData(openFileDialogDozer.FileName))
+                try
                 {
+                    parkingCollection.LoadData(openFileDialogDozer.FileName);
                     MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Загружено из файла " + openFileDialogDozer.FileName);
                     ReloadLevels();
                     Draw();
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn("Неизвестная ошибка при сохранении: " + ex.Message);
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
