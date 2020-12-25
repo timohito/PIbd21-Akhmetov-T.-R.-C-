@@ -26,7 +26,7 @@ namespace Dozer
             _maxCount = columns * rows;
             _places = new List<T>();
             pictureWidth = picWidth;
-            pictureHeight = picHeight; ;
+            pictureHeight = picHeight;
         }
 
         public static bool operator +(Parking<T> p, T car)
