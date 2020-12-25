@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Dozer
 {
-	public class Car : Vehicle
+	public class Car : Vehicle, IEquatable<Car>
 	{
 		protected readonly int carWidth = 90;
 
@@ -94,6 +94,46 @@ namespace Dozer
 		public override string ToString()
 		{
 			return $"{MaxSpeed}{separator}{Weight}{separator}{MainColor.Name}";
+		}
+
+		public bool Equals(Car other)
+		{
+			if (other == null)
+			{
+				return false;
+			}
+			if (GetType().Name != other.GetType().Name)
+			{
+				return false;
+			}
+			if (MaxSpeed != other.MaxSpeed)
+			{
+				return false;
+			}
+			if (Weight != other.Weight)
+			{
+				return false;
+			}
+			if (MainColor != other.MainColor)
+			{
+				return false;
+			}
+			return true;
+		}
+		public override bool Equals(Object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+			if (!(obj is Car carObj))
+			{
+				return false;
+			}
+			else
+			{
+				return Equals(carObj);
+			}
 		}
 	}
 }

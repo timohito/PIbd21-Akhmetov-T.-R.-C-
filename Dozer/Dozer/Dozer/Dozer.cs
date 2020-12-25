@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Dozer
 {
-	class Dozer : Car 
+	class Dozer : Car, IEquatable<Car>
 	{
 		public Color DopColor { private set; get; }
 
@@ -61,6 +61,32 @@ namespace Dozer
 		public override string ToString()
 		{
 			return $"{base.ToString()}{separator}{DopColor.Name}{separator}{Kovsh}{separator}{Truba}";
+		}
+
+		public bool Equals(Dozer other)
+		{
+			if (!((Car)other).Equals(this) || Kovsh != other.Kovsh || Truba != other.Truba || DopColor != other.DopColor)
+			{
+				return false;
+			}
+			return true;
+		}
+
+		public override bool Equals(Object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+
+			if (!(obj is Dozer carObj))
+			{
+				return false;
+			}
+			else
+			{
+				return Equals(carObj);
+			}
 		}
 	}
 }
