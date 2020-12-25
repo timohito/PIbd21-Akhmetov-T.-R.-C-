@@ -1,0 +1,37 @@
+2020-12-25 21:54:56.8537|INFO|Dozer.FormParking|Добавили парковку 1
+2020-12-25 21:54:56.8843|INFO|Dozer.FormParking|Перешли на парковку 1
+2020-12-25 21:55:00.0120|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:02.8115|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:05.1653|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:07.1849|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:09.1778|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:11.1980|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:13.4458|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:15.5859|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:18.2420|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:20.6579|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:24.1023|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:26.4340|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:28.6780|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:31.6520|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:34.0999|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:55:36.4351|WARN|Dozer.FormParking|Переполнение: На парковке нет свободных мест
+2020-12-25 21:55:49.7622|INFO|Dozer.FormParking|Изъят транспорт 100;100;White с места 6
+2020-12-25 21:56:09.1802|INFO|Dozer.FormParking|Добавили парковку 1
+2020-12-25 21:56:09.2034|INFO|Dozer.FormParking|Перешли на парковку 1
+2020-12-25 21:56:16.6845|INFO|Dozer.FormParking|Добавлен транспорт 100;100;White
+2020-12-25 21:56:20.4645|WARN|Dozer.FormParking|Не найдено: Не найден автомобиль по месту 4
+2020-12-25 21:58:43.3689|INFO|Dozer.FormParking|Загружено из файла C:\Users\Тимур\Documents\парковки\parks.txt
+2020-12-25 21:58:43.3919|INFO|Dozer.FormParking|Перешли на парковку 1
+2020-12-25 21:58:44.9617|INFO|Dozer.FormParking|Перешли на парковку 2
+2020-12-25 21:58:46.4453|INFO|Dozer.FormParking|Перешли на парковку 1
+2020-12-25 21:59:11.6578|INFO|Dozer.FormParking|Перешли на парковку 2
+2020-12-25 21:59:30.8220|INFO|Dozer.FormParking|Добавлен транспорт 100;100;Aqua;Yellow;True;True
+2020-12-25 21:59:38.3841|INFO|Dozer.FormParking|Добавлен транспорт 100;100;Yellow;DarkGreen;True;True
+2020-12-25 21:59:40.0021|INFO|Dozer.FormParking|Перешли на парковку 1
+2020-12-25 21:59:49.2303|INFO|Dozer.FormParking|Добавлен транспорт 100;100;DarkGreen;Aqua;True;False
+2020-12-25 21:59:56.7613|WARN|Dozer.FormParking|Не найдено: Не найден автомобиль по месту 7
+2020-12-25 22:01:05.1652|INFO|Dozer.FormParking|Загружено из файла C:\Users\Тимур\Documents\парковки\parks.txt
+2020-12-25 22:01:05.1882|INFO|Dozer.FormParking|Перешли на парковку 1
+2020-12-25 22:01:15.6437|INFO|Dozer.FormParking|Добавлен транспорт 100;100;Yellow;Blue;True;True
+2020-12-25 22:01:24.1412|INFO|Dozer.FormParking|Добавлен транспорт 100;100;DarkGreen
